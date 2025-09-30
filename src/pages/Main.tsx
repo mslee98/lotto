@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Main = () => {
   const handleMegaPurchase = () => {
-    console.log('메가밀리언 구매하기 클릭됨')
+    console.log('메가밀리언 구매 버튼 클릭됨')
   }
 
   const handlePowerballPurchase = () => {
@@ -123,16 +124,21 @@ const Main = () => {
           >
             <p>당첨금안내</p>
           </button>
-          <button
-            onClick={onPurchase}
-            className={`flex-1 px-3 py-2 rounded text-sm font-medium text-white transition-colors ${
-              isMega
-                ? 'bg-blue-600 hover:bg-blue-700'
-                : 'bg-red-600 hover:bg-red-700'
-            }`}
-          >
-            <p>{isMega ? '메가밀리언 주문하기' : '파워볼 주문하기'}</p>
-          </button>
+            {isMega ? (
+              <Link
+                to="/mega-millions"
+                className="flex-1 px-3 py-2 rounded text-sm font-medium text-white transition-colors bg-blue-600 hover:bg-blue-700 text-center"
+              >
+                <p>메가밀리언 주문하기</p>
+              </Link>
+            ) : (
+              <button
+                onClick={onPurchase}
+                className="flex-1 px-3 py-2 rounded text-sm font-medium text-white transition-colors bg-red-600 hover:bg-red-700"
+              >
+                <p>파워볼 주문하기</p>
+              </button>
+            )}
         </div>
 
         {/* Countdown */}
@@ -328,15 +334,15 @@ const Main = () => {
           {/* Quick Action Buttons */}
           <div className="grid grid-cols-5 gap-4 mt-6">
             {/* 메가밀리언 구매 */}
-            <button
-              onClick={() => handleQuickAction('메가밀리언 구매')}
+            <Link
+              to="/mega-millions"
               className="flex flex-col items-center space-y-2 p-3 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow active:scale-95 touch-manipulation min-h-[80px]"
             >
               <div className="w-10 h-10 flex items-center justify-center">
                 <img src="./nmi_02.png" alt="메가밀리언" className="w-8 h-8 object-contain" />
               </div>
               <span className="text-xs font-medium text-gray-700 text-center whitespace-pre-line leading-tight">메가밀리언<br/>구매</span>
-            </button>
+            </Link>
 
             {/* 파워볼 구매 */}
             <button

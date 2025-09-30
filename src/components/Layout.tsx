@@ -1,4 +1,5 @@
-import { ReactNode, useState } from 'react'
+import { type ReactNode, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 interface LayoutProps {
   children: ReactNode
@@ -32,24 +33,24 @@ const Layout = ({ children }: LayoutProps) => {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex space-x-8">
-              <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium transition-colors">
+              <Link to="/" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium transition-colors">
                 서비스 안내
-              </a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium transition-colors">
+              </Link>
+              <Link to="/mega-millions" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium transition-colors">
                 메가밀리언 구매
-              </a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium transition-colors">
+              </Link>
+              <Link to="/powerball" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium transition-colors">
                 파워볼 구매
-              </a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium transition-colors">
+              </Link>
+              <Link to="/results" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium transition-colors">
                 당첨 결과
-              </a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium transition-colors">
+              </Link>
+              <Link to="/charge" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium transition-colors">
                 캐시 충전
-              </a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium transition-colors">
+              </Link>
+              <Link to="/events" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium transition-colors">
                 이벤트&쿠폰
-              </a>
+              </Link>
             </nav>
 
             {/* Desktop Login/Signup Buttons */}
@@ -78,24 +79,24 @@ const Layout = ({ children }: LayoutProps) => {
           {isMobileMenuOpen && (
             <div className="lg:hidden border-t border-gray-200 bg-white">
               <div className="px-2 pt-2 pb-3 space-y-1">
-                <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
                   서비스 안내
-                </a>
-                <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                </Link>
+                <Link to="/mega-millions" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
                   메가밀리언 구매
-                </a>
-                <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                </Link>
+                <Link to="/powerball" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
                   파워볼 구매
-                </a>
-                <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                </Link>
+                <Link to="/results" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
                   당첨 결과
-                </a>
-                <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                </Link>
+                <Link to="/charge" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
                   캐시 충전
-                </a>
-                <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
+                </Link>
+                <Link to="/events" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
                   이벤트&쿠폰
-                </a>
+                </Link>
                     <div className="border-t border-gray-200 pt-3 mt-3">
                       <button className="block w-full text-left px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
                         로그인
