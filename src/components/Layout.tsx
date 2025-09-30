@@ -117,11 +117,48 @@ const Layout = ({ children }: LayoutProps) => {
       </main>
 
           {/* Footer */}
-          <footer className="bg-gray-50 border-t mt-auto">
+          <footer className="bg-gray-100 mt-auto">
             <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-              <div className="text-center text-gray-600 text-sm">
-                <p className="mb-2">&copy; 2024 Lucky Lotto. All rights reserved.</p>
-                <p>복권 대행 서비스 | 사업자등록번호: 123-45-67890</p>
+              {/* Top Section - Logo and Navigation */}
+              <div className="flex justify-between items-start mb-6">
+                {/* Logo */}
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">L</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800">Lucky Lotto</h3>
+                    <p className="text-sm text-gray-500">럭키로또</p>
+                  </div>
+                </div>
+
+                {/* Navigation Links */}
+                <div className="flex flex-wrap gap-6">
+                  <a href="#" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">서비스안내</a>
+                  <a href="#" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">개인정보처리방침</a>
+                  <a href="#" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">이용약관</a>
+                  <a href="#" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">1:1문의</a>
+                  <a href="#" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">고객센터</a>
+                </div>
+              </div>
+
+              {/* Company Information */}
+              <div className="space-y-2 text-sm text-gray-600 mb-4">
+                <p>와이제이하이테크 대표이사 : 이동근 서울 강남구 테헤란로 123</p>
+                <p>사업자등록번호: 875-81-02965</p>
+                <p>통신판매등록번호 : 제2023-서울강남-03548호</p>
+                <p>서비스 및 제휴문의 E-MAIL: support@luckylottokorea.co.kr</p>
+              </div>
+
+              {/* Disclaimers */}
+              <div className="space-y-1 text-sm text-red-600 mb-4">
+                <p>19세 미만 청소년은 복권을 구매하거나 당첨금을 수령할 수 없습니다.</p>
+                <p>과도한 복권 구매는 사행성 중독으로 인한 경제적 부담을 불러 올 수 있습니다.</p>
+              </div>
+
+              {/* Copyright */}
+              <div>
+                <p className="text-gray-600 text-sm">COPYRIGHT © MELOKO ALL RIGHTS RESERVED.</p>
               </div>
             </div>
           </footer>
