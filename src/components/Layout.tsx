@@ -1,5 +1,9 @@
 import { type ReactNode, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
+import { useLogout } from '../hooks/useAuth'
+import { showSuccessToast, showErrorToast } from '../utils/toast'
+import LoginModal from './LoginModal'
 
 interface LayoutProps {
   children: ReactNode
@@ -7,9 +11,28 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { user, openLoginModal, isLoginModalOpen, closeLoginModal } = useAuth()
+  const logoutMutation = useLogout()
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
+
+  const handleLogout = async () => {
+    // 로그아웃 확인 다이얼로그
+    const confirmed = window.confirm('정말 로그아웃하시겠습니까?')
+    if (!confirmed) return
+
+    try {
+      await logoutMutation.mutateAsync()
+      
+      showSuccessToast('로그아웃되었습니다!')
+      
+      setIsMobileMenuOpen(false)
+    } catch (error) {
+      console.error('로그아웃 실패:', error)
+      showErrorToast('로그아웃에 실패했습니다. 다시 시도해주세요.')
+    }
   }
 
   return (
@@ -19,16 +42,12 @@ const Layout = ({ children }: LayoutProps) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">L</span>
-              </div>
-              <div>
-                <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
-                  Lucky Lotto
-                </h1>
-                <p className="text-sm text-gray-500">럭키로또</p>
-              </div>
+            <div className="flex items-center">
+              <img
+                src="./logo.gif"
+                alt="럭키 로또"
+                className="h-12 w-auto object-contain"
+              />
             </div>
 
             {/* Desktop Navigation */}
@@ -55,12 +74,34 @@ const Layout = ({ children }: LayoutProps) => {
 
             {/* Desktop Login/Signup Buttons */}
             <div className="hidden lg:flex items-center space-x-4">
-              <button className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                로그인
-              </button>
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
-                회원가입
-              </button>
+              {user ? (
+                <div className="flex items-center space-x-4">
+                  <Link
+                    to="/mypage"
+                    className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  >
+                    마이페이지
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  >
+                    로그아웃
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <button
+                    onClick={openLoginModal}
+                    className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  >
+                    로그인
+                  </button>
+                  <Link to="/register" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                    회원가입
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Mobile Menu Button */}
@@ -98,12 +139,42 @@ const Layout = ({ children }: LayoutProps) => {
                   이벤트&쿠폰
                 </Link>
                     <div className="border-t border-gray-200 pt-3 mt-3">
-                      <button className="block w-full text-left px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors">
-                        로그인
-                      </button>
-                      <button className="block w-full text-left px-3 py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors mt-2">
-                        회원가입
-                      </button>
+                      {user ? (
+                        <>
+                          <Link
+                            to="/mypage"
+                            className="block w-full text-left px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            마이페이지
+                          </Link>
+                          <button
+                            onClick={handleLogout}
+                            className="block w-full text-left px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors mt-2"
+                          >
+                            로그아웃
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            onClick={() => {
+                              openLoginModal()
+                              setIsMobileMenuOpen(false)
+                            }}
+                            className="block w-full text-left px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                          >
+                            로그인
+                          </button>
+                          <Link 
+                            to="/register" 
+                            className="block w-full text-left px-3 py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors mt-2"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            회원가입
+                          </Link>
+                        </>
+                      )}
                     </div>
               </div>
             </div>
@@ -121,16 +192,14 @@ const Layout = ({ children }: LayoutProps) => {
             <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
               {/* Top Section - Logo and Navigation */}
               <div className="flex justify-between items-start mb-6">
-                {/* Logo */}
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">L</span>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-gray-800">Lucky Lotto</h3>
-                    <p className="text-sm text-gray-500">럭키로또</p>
-                  </div>
-                </div>
+              {/* Logo */}
+              <div className="flex items-center">
+                <img
+                  src="./logo_f.png"
+                  alt="럭키 로또"
+                  className="h-12 w-auto object-contain"
+                />
+              </div>
 
                 {/* Navigation Links */}
                 <div className="flex flex-wrap gap-6">
@@ -162,6 +231,12 @@ const Layout = ({ children }: LayoutProps) => {
               </div>
             </div>
           </footer>
+
+      {/* Login Modal */}
+      <LoginModal 
+        isOpen={isLoginModalOpen} 
+        onClose={closeLoginModal} 
+      />
     </div>
   )
 }
